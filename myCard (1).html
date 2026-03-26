@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>朱俞璇的數位名片</title>
+  <style>
+    /* 基礎設定與初始粉紅背景 */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      color: #37352f;
+      background-color: #FFB3BA; /* 初始背景改為柔和的粉紅色 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      transition: background-color 0.6s ease;
+      cursor: pointer; /* 提示背景可點擊 */
+    }
+
+    /* 升級版：半透明玻璃質感卡片 */
+    .card {
+      text-align: center;
+      max-width: 360px;
+      padding: 40px 30px;
+      background: rgba(255, 255, 255, 0.7); /* 半透明白色背景 */
+      backdrop-filter: blur(12px); /* 背景模糊效果 */
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.5); /* 邊框反光感 */
+      border-radius: 24px; /* 更圓潤的邊角 */
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); /* 柔和的立體陰影 */
+      cursor: default;
+      z-index: 10;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px); /* 滑鼠游標移到卡片上時會微微浮起 */
+    }
+
+    /* 圓形大頭照 */
+    .profile-img {
+      width: 140px;
+      height: 140px;
+      border-radius: 60%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      border: 3px solid #ffffff;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-img:hover {
+      transform: scale(1.05); /* 照片碰到會微微放大 */
+    }
+
+    /* 姓名與副標題 */
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      margin: 0 0 12px 0;
+      letter-spacing: 0.5px;
+    }
+
+    p.subtitle {
+      font-size: 15px;
+      color: #555450;
+      line-height: 1.6;
+      margin: 0 0 32px 0;
+    }
+
+    p.subtitle strong {
+      color: #37352f;
+      font-weight: 600;
+    }
+
+    /* 按鈕區域 */
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .social-btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #ffffff; /* 按鈕初始為白色 */
+      color: #37352f;
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid rgba(0,0,0,0.05);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .social-btn:active {
+      transform: scale(0.95); /* 點擊時有按下去的縮小回饋感 */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <img src="證件照.jpg" alt="朱俞璇" class="profile-img">
+    
+    <h1>朱俞璇</h1>
+    <p class="subtitle">
+      熱愛<strong>科技與自我成長</strong>的<br>
+      <strong>嘉義大學資管系大二學生，目前正在努力精進自我</strong>
+    </p>
+
+    <div class="social-links">
+      <a class="social-btn">GitHub</a>
+      <a class="social-btn">LinkedIn</a>
+      <a class="social-btn">Instagram</a>
+    </div>
+  </div>
+
+  <script>
+    const macaronColors = [
+      '#FFB3BA', // 柔櫻粉
+      '#FFDFBA', // 蜜桃橘
+      '#FFFFBA', // 奶油黃
+      '#BAFFC9', // 薄荷綠
+      '#BAE1FF', // 寶寶藍
+      '#E8DFF5', // 薰衣草紫
+      '#FCE2E5'  // 玫瑰石英
+    ];
+
+    // 1. 控制按鈕點擊變色（不跳轉）
+    const buttons = document.querySelectorAll('.social-btn');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault(); // 阻止任何預設的連結跳轉行為
+        e.stopPropagation(); // 阻止點擊事件往上傳遞（避免觸發背景變色）
+        
+        // 隨機抽取一個顏色讓按鈕變色
+        const randomBtnColor = macaronColors[Math.floor(Math.random() * macaronColors.length)];
+        this.style.backgroundColor = randomBtnColor;
+      });
+    });
+
+    // 2. 控制背景點擊變色
+    document.body.addEventListener('click', function(e) {
+      // 如果點擊到的是卡片內部（包含文字、照片），就不變換背景
+      // 這樣可以讓變色功能只在點擊「卡片以外的空白背景」時觸發
+      if (e.target.closest('.card')) return;
+
+      const randomColor = macaronColors[Math.floor(Math.random() * macaronColors.length)];
+      document.body.style.backgroundColor = randomColor;
+    });
+  </script>
+
+</body>
+</html>
